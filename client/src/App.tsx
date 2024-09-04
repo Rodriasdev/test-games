@@ -20,31 +20,39 @@ function App() {
     setInitGameState(true)
   };
 
-  const validateResponse = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const fetchApi = async (emotion:string) => {
+    const response = await fetch(`https://api.unsplash.com/search/photos?query=${emotion}`, {
+      headers: {
+          Authorization: `Client-ID H2Qsf7blkvPZ8BaTW9eQCN2aKRHOB4ZMjhtlH4CU03U`
+      }
+  });
     
+    const data = await response.json()
+
+    return data
+  }
+
+  const validateResponse = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const emotions: Emotion[] = ['sorrow', 'happy', 'angry'];
+
+
     if (event.currentTarget.id === emotionState) {
-      return alert('Respuesta correcta.');
+      alert('Respuesta correcta.');
+      
+      return setEmotionState(emotions[randomNumber(2, 0)]);
     }
 
-    return alert('Respuesta incorrecta.');
+    alert('Respuesta incorrecta.');
+    return setEmotionState(emotions[randomNumber(2, 0)]);
   };
 
   useEffect(() => {
-
-
     if(initGameState){
 
       (
         async () => {
-          const response = await fetch(`https://api.unsplash.com/search/photos?query=${emotionState}`, {
-            headers: {
-                Authorization: `Client-ID H2Qsf7blkvPZ8BaTW9eQCN2aKRHOB4ZMjhtlH4CU03U`
-            }
-        });
-          
-   
-          
-          const data = await response.json()
+
+          const data = await fetchApi(emotionState)
           
 
           let i =  randomNumber(data.results.length,0)
