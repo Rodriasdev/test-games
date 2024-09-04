@@ -3,16 +3,9 @@ import './assets/styles.css';
 
 type Emotion = 'sorrow' | 'happy' | 'angry';
 
-interface DeleteImageState {
-  triste: Array<string>;
-  enojado: Array<string>;
-  feliz: Array<string>;
-}
 
 function App() {
   const [emotionState, setEmotionState] = useState<Emotion>('sorrow');
-
-  const [imageNumber, setImageNumber] = useState<number>(1);
   const [initGameState, setInitGameState] = useState<boolean>(false)
   const [urlImage, setUrlImageState] = useState<string>("");
 
