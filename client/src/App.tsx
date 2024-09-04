@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './assets/styles.css';
 
-type Emotion = 'triste' | 'feliz' | 'enojado';
+type Emotion = 'sorrow' | 'happy' | 'angry';
 
 interface DeleteImageState {
   triste: Array<string>;
@@ -10,14 +10,11 @@ interface DeleteImageState {
 }
 
 function App() {
-  const [emotionState, setEmotionState] = useState<Emotion>('triste');
-  const [deleteImageState, setDeleteImageState] = useState<DeleteImageState>({
-    triste: [],
-    enojado: [],
-    feliz: [],
-  });
+  const [emotionState, setEmotionState] = useState<Emotion>('sorrow');
+
   const [imageNumber, setImageNumber] = useState<number>(1);
   const [initGameState, setInitGameState] = useState<boolean>(false)
+  const [urlImage, setUrlImageState] = useState<string>("");
 
 
   function randomNumber(max: number, min: number) {
@@ -25,13 +22,12 @@ function App() {
   }
 
   const initGame = () => {
-    const emotions: Emotion[] = ['triste', 'feliz', 'enojado'];
+    const emotions: Emotion[] = ['sorrow', 'happy', 'angry'];
     setEmotionState(emotions[randomNumber(2, 0)]);
     setInitGameState(true)
   };
 
   const validateResponse = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.id, emotionState);
 
     if (event.currentTarget.id === emotionState) {
       return alert('Respuesta correcta.');
@@ -41,31 +37,27 @@ function App() {
   };
 
   useEffect(() => {
+
+
     if(initGameState){
-        let number = randomNumber(1, 1); 
-        setImageNumber(number);
 
-        let verification = deleteImageState[emotionState].find((value) => 
-        value == `/game/${emotionState}/image${imageNumber}.jpeg`
-        )
-
-        while(verification != undefined) {
-          const emotions: Emotion[] = ['triste', 'feliz', 'enojado'];
-          setEmotionState(emotions[randomNumber(2, 0)]);
-          number = randomNumber(1,1);
-          verification = deleteImageState[emotionState].find((value) => 
-            value == `/game/${emotionState}/image${imageNumber}.jpeg`
-            )
-        }
-        
-
-        setDeleteImageState((prevState) => {
-          const updatedState = { ...prevState };
-          updatedState[emotionState] = [...updatedState[emotionState], `/game/${emotionState}/image${imageNumber}.jpeg`]; 
-          return updatedState;
+      (
+        async () => {
+          const response = await fetch(`https://api.unsplash.com/search/photos?query=${emotionState}`, {
+            headers: {
+                Authorization: `Client-ID H2Qsf7blkvPZ8BaTW9eQCN2aKRHOB4ZMjhtlH4CU03U`
+            }
         });
+          let i =  randomNumber(9,1)
+   
+          
+          const data = await response.json()
 
-
+          
+          setUrlImageState(data.results[i].links.download)
+          
+        }
+      )()
     }
   }, [emotionState]); 
 
@@ -79,14 +71,7 @@ function App() {
       <div className='row text-center mb-5 mt-5'>
         <div className='col d-flex justify-content-center'>
           <div className='image-example'>
-            {
-              initGameState ?
-              <img
-                className='w-100 h-100'
-                src={`/game/${emotionState}/image${imageNumber}.jpeg`}
-              />
-              : ""
-            }
+            <img className="w-100 h-100" src={urlImage}  alt="" />
           </div>
         </div>
       </div>
@@ -94,14 +79,14 @@ function App() {
         <div className='col d-flex justify-content-center'>
           <button
             onClick={validateResponse}
-            id='feliz'
+            id='happy'
             className='me-4 rounded-3'
           >
             Feliz
           </button>
           <button
             onClick={validateResponse}
-            id='enojado'
+            id='sorrow'
             className='me-4 rounded-3'
           >
             Enojado
