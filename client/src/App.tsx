@@ -21,7 +21,7 @@ function App() {
   };
 
   const validateResponse = (event: React.MouseEvent<HTMLButtonElement>) => {
-
+    
     if (event.currentTarget.id === emotionState) {
       return alert('Respuesta correcta.');
     }
@@ -41,11 +41,13 @@ function App() {
                 Authorization: `Client-ID H2Qsf7blkvPZ8BaTW9eQCN2aKRHOB4ZMjhtlH4CU03U`
             }
         });
-          let i =  randomNumber(9,1)
+          
    
           
           const data = await response.json()
+          
 
+          let i =  randomNumber(data.results.length,0)
           
           setUrlImageState(data.results[i].links.download)
           
@@ -79,12 +81,12 @@ function App() {
           </button>
           <button
             onClick={validateResponse}
-            id='sorrow'
+            id='angry'
             className='me-4 rounded-3'
           >
             Enojado
           </button>
-          <button onClick={validateResponse} id='triste' className='rounded-3'>
+          <button onClick={validateResponse} id='sorrow' className='rounded-3'>
             Triste
           </button>
         </div>
