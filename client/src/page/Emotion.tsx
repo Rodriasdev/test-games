@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './assets/styles.css';
+import '../assets/styles.css';
 
 type Emotion = 'sorrow' | 'happy' | 'angry';
 
