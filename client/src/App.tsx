@@ -34,16 +34,14 @@ function App() {
 
   const validateResponse = (event: React.MouseEvent<HTMLButtonElement>) => {
     const emotions: Emotion[] = ['sorrow', 'happy', 'angry'];
+    setEmotionState(emotions[randomNumber(2,0)])
 
-
+    
     if (event.currentTarget.id === emotionState) {
-      alert('Respuesta correcta.');
-      
-      return setEmotionState(emotions[randomNumber(2, 0)]);
-    }
+      return alert('Respuesta correcta.');
+    };
 
     alert('Respuesta incorrecta.');
-    return setEmotionState(emotions[randomNumber(2, 0)]);
   };
 
   useEffect(() => {
