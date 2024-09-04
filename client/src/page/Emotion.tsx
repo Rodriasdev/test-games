@@ -3,7 +3,7 @@ import './assets/styles.css';
 
 type Emotion = 'sorrow' | 'happy' | 'angry';
 
-export const App = () => {
+export const Emotion = () => {
   const [emotionState, setEmotionState] = useState<Emotion>('sorrow');
   const [initGameState, setInitGameState] = useState<boolean>(false)
   const [urlImage, setUrlImageState] = useState<string>("");
@@ -99,5 +99,3 @@ export const App = () => {
     </main>
   );
 }
-
-export default App;
