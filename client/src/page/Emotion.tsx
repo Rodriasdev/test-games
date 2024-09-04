@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/styles.css';
-
+import { Navigate, useNavigate } from 'react-router-dom';
 type Emotion = 'sorrow' | 'happy' | 'angry';
 
 export const Emotion = () => {
   const [emotionState, setEmotionState] = useState<Emotion>('sorrow');
   const [initGameState, setInitGameState] = useState<boolean>(false)
   const [urlImage, setUrlImageState] = useState<string>("");
-
+  const navigate = useNavigate()
 
   function randomNumber(max: number, min: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -63,6 +63,7 @@ export const Emotion = () => {
 
   return (
     <main className='container'>
+      <h6 onClick={() => navigate('home')} role='button' className='mt-1'>Atras</h6>
       <div className='text-center mt-4'>
         <button onClick={initGame} className='btn bg-dark text-white rounded-5'>
           Comenzar
