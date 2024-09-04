@@ -3,8 +3,7 @@ import './assets/styles.css';
 
 type Emotion = 'sorrow' | 'happy' | 'angry';
 
-
-function App() {
+export const App = () => {
   const [emotionState, setEmotionState] = useState<Emotion>('sorrow');
   const [initGameState, setInitGameState] = useState<boolean>(false)
   const [urlImage, setUrlImageState] = useState<string>("");
